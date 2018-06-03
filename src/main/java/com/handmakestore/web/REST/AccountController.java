@@ -1,17 +1,23 @@
 package com.handmakestore.web.REST;
 
+import com.handmakestore.common.VO.account.AccountVO;
+import com.handmakestore.common.VO.account.RegistrationVO;
+import com.handmakestore.common.VO.account.ResetPasswordVO;
+import com.handmakestore.common.mapper.AccountMapper;
+import com.handmakestore.domain.Account;
+import com.handmakestore.service.AccountService;
 import com.handmakestore.service.ErrorUtil;
-import com.handmakestore.web.VO.RegistrationVO;
-import com.handmakestore.web.VO.ResetPasswordVO;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.List;
 
 @RestController
 @RequestMapping(
@@ -22,8 +28,20 @@ import java.util.List;
 @Slf4j
 public class AccountController {
 
+    private final AccountService accountService;
+    private final AccountMapper accountMapper;
+
+    @Autowired
+    public AccountController(
+            AccountService accountService,
+            AccountMapper accountMapper) {
+
+        this.accountService = accountService;
+        this.accountMapper = accountMapper;
+    }
+
     @PostMapping
-    public ResponseEntity create(
+    public ResponseEntity<AccountVO> create(
             @Valid RegistrationVO registrationVO,
             BindingResult bindingResult) {
 
@@ -31,7 +49,8 @@ public class AccountController {
             throw ErrorUtil.validationException(bindingResult.getAllErrors());
         }
 
-        return null;
+        Account account = accountService.createAccount(registrationVO);
+        return new ResponseEntity<>(accountMapper.toVO(account), HttpStatus.CREATED);
     }
 
     @PostMapping(value = "/reset/password")

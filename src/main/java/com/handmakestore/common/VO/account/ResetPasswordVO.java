@@ -1,4 +1,4 @@
-package com.handmakestore.web.VO;
+package com.handmakestore.common.VO.account;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

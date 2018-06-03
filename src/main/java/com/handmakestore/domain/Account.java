@@ -10,14 +10,14 @@ import javax.persistence.Index;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
-//@Entity
-//@Table(
-//    name = "HMS_ACCOUNT",
-//    indexes = { @Index (name = "EMAIL_UNIQUE_INDEX", unique = true, columnList = "name,email") }
-//)
+@Entity
+@Table(
+    name = "HMS_ACCOUNT",
+    indexes = { @Index (name = "EMAIL_UNIQUE_INDEX", unique = true, columnList = "name,email") }
+)
 @NoArgsConstructor
 @Data
-public class Account {//extends AbstractAuditable<LocalDateTime, Long> {
+public class Account extends AbstractAuditable<LocalDateTime, Long> {
 
     @Column(nullable = false, length = 64)
     private String name;

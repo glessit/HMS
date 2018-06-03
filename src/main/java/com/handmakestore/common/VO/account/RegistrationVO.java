@@ -1,7 +1,8 @@
-package com.handmakestore.web.VO;
+package com.handmakestore.common.VO.account;
 
 import com.handmakestore.service.type.CustomerType;
-import lombok.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
